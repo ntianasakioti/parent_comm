@@ -46,10 +46,15 @@ bool BaseComm::CheckForMessage(int moduleId)
 {
 	MutexLock();
 	if(messageBacklog[moduleId].size() > 0)
+	{
+		MutexUnlock();
 		return true;
+	}
 	else
+	{
+		MutexUnlock();  
 		return false;
-	MutexUnlock();  
+	}
 }
 
 Message * BaseComm::GetMessage(int moduleId)
