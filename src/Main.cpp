@@ -70,6 +70,7 @@ int main()
 	// Send 5 Point-to-Point Messages 
 	while(counter < 5)	
 	{
+		std::cout << "In my while loop " << std::endl; 
 		std::cout << "Checking for Messages: " << commint->CheckForMessage(0) << std::endl; 
 		if( commint->CheckForMessage(0) == true)
 		{
