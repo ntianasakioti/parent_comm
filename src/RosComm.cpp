@@ -41,9 +41,7 @@ void RosComm::Setup()
 		std::cout << "i : " << i << "comm " << _myCommRow[i] << std::endl; 
 		if(_myCommRow[i] != GetMyId() && _myCommRow[i] == 'R')
 		{
-			std::cout << "Creating publisher for topic " << it->first << std::endl;
 			ros::Publisher * newPub = new ros::Publisher(_nh->advertise<std_msgs::Int32MultiArray>(it->first, 100));
-			std::cout << "Inserting publisher pair "<< i << " " << it->first << std::endl; 
 			_publishers.insert(std::make_pair(it->second, newPub));
 		}
 		it++;
@@ -96,7 +94,8 @@ int RosComm::SendPtoP(int * dataBuffer, std::string dest)
 	}
 
 	ros::spinOnce();
-	return 0;
+	std::cout << "Ros success in sending " << std::endl; 
+	return 1;
 }
 
 /* int RosComm::SendBd(int * dataBuffer)

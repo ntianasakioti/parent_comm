@@ -74,6 +74,7 @@ Message * BaseComm::GetMessage(int moduleId)
 
 void BaseComm::UpdateMessageLog(int  * dataBuffer, int moduleId)
 {
+	std::cout << "Pushing back a message to module " << moduleId << std::endl; 
 	Message * newMsg = getMsgFromId(dataBuffer[3]);
 	
 	newMsg->SetHeaderAttr(std::make_pair(dataBuffer[0], dataBuffer[1]),dataBuffer[2], dataBuffer[3], dataBuffer[4], 
@@ -111,10 +112,8 @@ int BaseComm::GetId(std::string name)
 
 	std::map<std::string,int>::iterator it = nameIDs.begin();
 
-	std::cout << "Grabing AS id " << "size " << nameIDs.size() <<  std::endl;
 	for(int i = 0 ; i < nameIDs.size(); i++)
 	{
-		std::cout << "i " << i << " name " << name << " " << it->first << std::endl; 
 		//std::cout << it->first << std::endl; 
 		if(it->first == name)
 		{

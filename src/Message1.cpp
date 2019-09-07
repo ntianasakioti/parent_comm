@@ -28,7 +28,6 @@ void Message1::Initialize(int num1, char char1, double num2)
 {
     std::cout << "Initialize" << std::endl;
 	SetMsgType(0);
-   // _data = msg;
     _randomNum = num1;
     _character = char1;
     _secondNum = num2; 
@@ -126,7 +125,6 @@ void Message1::Serialize(int * dataBuf)
         /// DOUBLE conversion like this will work but when you output the single element it will not look right
     dataRef = (int*) (&_secondNum);
     for(int i = 0; i < sizeof(_secondNum)/sizeof(int); i++){
-        std::cout << "double " << dataRef[i] << std::endl; 
         dataBuf[index++] = dataRef[i];}
 
     std::cout << "Serialize:  " <<  ": buffersize = " << GetSize() + Message::_headerSize << std::endl << std::flush;
@@ -143,7 +141,7 @@ void Message1::DeSerialize(int * dataBuf)
 	std::cout << std::endl << std::flush;
 
     int index = Message::_headerSize;
-    std::cout << "HeaderSize " << Message::_headerSize << std::endl; 
+  //  std::cout << "HeaderSize " << Message::_headerSize << std::endl; 
     int * dataRef;
 
     // get string from size 8 int array
@@ -212,6 +210,4 @@ void Message1::DeSerialize(int * dataBuf)
     dataRef = (int*) (&_secondNum);
     for(int i = 0; i < sizeof(_secondNum)/sizeof(int); i++){
         dataRef[i] = dataBuf[index++];}
-
-	std::cout << "DATA " << _randomNum << " " << _character << " " << _secondNum << std::endl; 
 }

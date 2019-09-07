@@ -190,11 +190,11 @@ int BlueComm::SendPtoP(int * dataBuffer, std::string dest)
 	int int_array[dataBuffer[4 ]+ 9];
 	//int int_array[msg->GetSize() + msg->GetHeaderSize()];
 
-	std::cout << "After creating array " << std::endl; 
+	//std::cout << "After creating array " << std::endl; 
 
 	for(int i = 0; i < dataBuffer[4] + 9; i++)
 	{
-		std::cout << i << " " << dataBuffer[i] << std::endl; 
+		//std::cout << i << " " << dataBuffer[i] << std::endl; 
 		int_array[i] = dataBuffer[i];
 	}
 
