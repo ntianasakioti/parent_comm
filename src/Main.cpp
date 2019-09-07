@@ -72,11 +72,6 @@ int main()
 	{
 		std::cout << "In my while loop " << std::endl; 
 		std::cout << "Checking for Messages: " << commint->CheckForMessage(0) << std::endl; 
-		if( commint->CheckForMessage(0) == true)
-		{
-			std::cout << "There is a message, I am taking it out " << std::endl; 
-			Message * newMsg =  commint->GetMessage(0);
- 		}
 		timeLocal = boost::posix_time::second_clock::local_time();
 		std::cout <<" Before PtoP init " << std::endl; 
 		msg->Initialize( 1, 'd', 32.657);
@@ -98,12 +93,17 @@ int main()
 	// when should the message be deleted 
 
 	std::cout << "After deleting the message" << std::endl; 
- 
-	// Sending Broadcast message
-	//std::cout << "Before send bd " << std::endl << std::flush; 
-	//commint->SendMessage(msg, "All");
+
+	while( commint->CheckForMessage(0) == true)
+	{
+		std::cout << "There is a message, I am taking it out " << std::endl; 
+		Message * newMsg =  commint->GetMessage(0);
+		std::tuple<int,int> sourceId = newMsg->GetSourceId();  
+		std::cout << "it came from " << std::get<0>(sourceId) << " " << std::get<1>(sourceId) << std::endl; 
+		delete newMsg; 
+	}
+
 	sleep(100);
-	sleep(5000000);
 
 	return 0;
 }
