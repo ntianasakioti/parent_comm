@@ -2,11 +2,12 @@
 #define COMMINT_H
 
 #include "Comm.h"
+#include "ros/ros.h"
 
 class CommInt
 {
 public:
-	CommInt(Message * (*fcnPtr)(int));
+	CommInt(Message * (*fcnPtr)(int), ros::NodeHandle * nh);
 	~CommInt();
 	bool CheckForMessage(int moduleId);
 	int SendMessage(std::string dest, Message * msg);
