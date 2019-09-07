@@ -35,13 +35,16 @@ public:
 	Message * getMsgFromId(int id);
 	
 	int GetMessageLogSize(int moduleId);
-	int GetId(std::string name); 
+	int GetId(std::string name);
+	int GetMyId(); 
+
+protected:
+	std::map<std::string, int> nameIDs;
 
 private:
 	int ASid = 1; 
 	static std::vector<std::vector<Message*>> messageBacklog;
-	std::mutex messageMutex; 
-	std::map<std::string, int> nameIDs;
+	static std::mutex messageMutex; 
 	static Message * (*_fcnPtr)(int);
 };
 

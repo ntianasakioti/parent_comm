@@ -19,6 +19,7 @@ Message * BaseComm::getMsgFromId(int id)
 
 std::vector<std::vector<Message*>> BaseComm::messageBacklog; 
 Message * (*BaseComm::_fcnPtr)(int);
+std::mutex BaseComm::messageMutex;
 
 void BaseComm::Init()
 {
@@ -105,8 +106,10 @@ int BaseComm::GetId(std::string name)
 
 	std::map<std::string,int>::iterator it = nameIDs.begin();
 
+	std::cout << "Grabing AS id " << "size " << nameIDs.size() <<  std::endl;
 	for(int i = 0 ; i < nameIDs.size(); i++)
 	{
+		std::cout << "i " << i << " name " << name << " " << it->first << std::endl; 
 		//std::cout << it->first << std::endl; 
 		if(it->first == name)
 		{
@@ -116,4 +119,9 @@ int BaseComm::GetId(std::string name)
 	}
 
 	return -1; 
+}
+
+int BaseComm::GetMyId()
+{
+	return ASid;
 }

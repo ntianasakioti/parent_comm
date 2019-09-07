@@ -11,12 +11,13 @@
 #include "Message.h"
 #include "BlueComm.h"
 #include "RosComm.h"
+#include "ros/ros.h"
 
 class Comm
 {
 public:
 	static Comm * GetInstance();
-	void Init(Message * (*fcnPtr)(int));														
+	void Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh);														
 	int SendPtoP(Message * msg, std::string dest);																					
 	int SendBd(Message * msg);					
 	// instead of above two, could have one function

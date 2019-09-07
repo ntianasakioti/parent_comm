@@ -31,7 +31,7 @@ Comm * Comm::GetInstance()
 	return instance; 
 }
 
-void Comm::Init(Message * (*fcnPtr)(int))
+void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
 {
 	std::ifstream inf("../catkin_ws/src/parent_comm/config/nameIDs.txt"); 
 
@@ -122,26 +122,28 @@ void Comm::Init(Message * (*fcnPtr)(int))
 
 	std::cout << "Found system name id: " << id << std::endl; 
 
-	//bool Rflag = false;
-	//bool Bflag = false;  
+	bool Rflag = false;
+	bool Bflag = false;  
 
 
-// Hard-coded testing code.
 
-	AddMsgQueue(); 
-	BaseCommPtrs.insert(std::make_pair('B', new BlueComm()));
+	AddMsgQueue();
+	
+	// Hard-coded testing code.
+ 
+//	BaseCommPtrs.insert(std::make_pair('B', new BlueComm()));
 
-	std::map<char,BaseComm *>::iterator BaseCommIt = BaseCommPtrs.begin(); 
-	BaseCommIt->second->Init();
-	BaseCommIt->second->setMsgFcnPtr(fcnPtr);
+//	std::map<char,BaseComm *>::iterator BaseCommIt = BaseCommPtrs.begin(); 
+//	BaseCommIt->second->Init();
+//	BaseCommIt->second->setMsgFcnPtr(fcnPtr);
 
 ///Code below will be used in actual implementation ///
-/*	for(int i = 0; i < numAS; i++)
+	for(int i = 0; i < numAS; i++)
 	{
 		if(commTable[id][i] == 'R' && Rflag == false)
 		{
 			std::cout << "Creating RosComm" << std::endl; 
-			BaseCommPtrs.insert(std::make_pair('R', new RosComm()));
+			BaseCommPtrs.insert(std::make_pair('R', new RosComm(commTable[id], nh)));
 		//	BaseCommPtrs.push_back(new RosComm());
 			Rflag = true; 
 		}
@@ -152,7 +154,7 @@ void Comm::Init(Message * (*fcnPtr)(int))
 			//BaseCommPtrs.push_back(new BlueComm());
 			Bflag = true; 
 		}
-	}*/
+	}
 
 	std::cout << "DONE INITIALIZING" << std::endl; 
 
@@ -251,9 +253,9 @@ int Comm::SendBd(Message * msg)
 		std::cout << "id " << id  << " " << "i " << i << std::endl << std::flush; 	
 		std::cout << "dest name " << it->first << std::endl << std::flush;
 		// could keep editing the buffer for it to have correct destination, and type
-		//dataBuffer[2] = (int) commTable[id][it->second];
-		//dataBuffer[7] = it->second;
-		//dataBuffer[8] = dataBuffer[1];
+		dataBuffer[2] = (int) commTable[id][it->second];
+		dataBuffer[7] = it->second;
+		dataBuffer[8] = dataBuffer[1];
 		
 		success = success == getPtr(commTable[id][it->second])->SendPtoP(dataBuffer, it->first);
 		sleep(7);
@@ -310,10 +312,11 @@ BaseComm * Comm::getPtr(char type)
 int Comm::GetId(std::string name)
 {
 	std::map<std::string,int>::iterator it = nameIdMap.begin();
-
+	std::cout << "Grabing AS id " << std::endl;
 	for(int i = 0 ; i < nameIdMap.size(); i++)
 	{
-		if(it->first == name)
+		std::cout << "i " << i << " name " << name << " " << it->first << std::endl; 
+		if(it->first == name) 
 		{
 			return it->second;
 		}

@@ -4,6 +4,7 @@
 BlueComm::BlueComm()
 {
 	std::cout << "Object created" << std::endl << std::flush; 
+	Init();
 	InitComm(); 
 }
 

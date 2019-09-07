@@ -1,12 +1,12 @@
 #include "CommInt.h"
 
-CommInt::CommInt(Message * (*fcnPtr)(int))
+CommInt::CommInt(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
 {
 	//TO DO: read module id from file
 	_moduleId = 0;
 	_ASId = 1; 
 
-	Comm::GetInstance()->Init(fcnPtr); 
+	Comm::GetInstance()->Init(fcnPtr, nh); 
 	// Create singular Comm instance if it hasn't been 
 	// created already
 	Comm::GetInstance()->AddMsgQueue();

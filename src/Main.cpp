@@ -7,6 +7,7 @@
 #include <ctime>
 #include <string>
 #include <sstream>
+#include "ros/ros.h"
 
 Message * getMessage( int id)
 {
@@ -27,6 +28,14 @@ Message * getMessage( int id)
 
 int main()
 {  
+	// ROS initializations
+	int argc = 0;
+	char ** argv; 
+	ros::init(argc, argv, "talker");
+
+	ros::NodeHandle * nh = new ros::NodeHandle; 
+
+
 //	int (*fcnPtr)(int) = foo; 
 	Message * (*fcnPtr)(int);
 	fcnPtr = getMessage;
@@ -36,9 +45,9 @@ int main()
 	std::cout << "Before initialize " << std::endl; 
 	msg->Initialize( 1 , 'd', 32.657);
  	 
-	CommInt * commint = new CommInt(fcnPtr);
+	CommInt * commint = new CommInt(fcnPtr, nh);
 
- 
+  
 	// Getting time that broadcast message will be sent
 	boost::posix_time::ptime timeLocal = boost::posix_time::second_clock::local_time();
 //	std::string time_string;
@@ -71,8 +80,8 @@ int main()
 		std::cout <<" Before PtoP init " << std::endl; 
 		msg->Initialize( 1, 'd', 32.657);
 		std::cout <<" After PtoP init " << std::endl; 
-		//commint->SendMessage(rand() < RAND_MAX /2 ? "Ntiana" : "OldLeathrum", msg);
-		commint->SendMessage("OldLeathrum", msg);
+		commint->SendMessage(rand() < RAND_MAX /2 ? "Ntiana" : "OldLeathrum", msg);
+		//commint->SendMessage("OldLeathrum", msg);
 		std::cout << "After this PtoP Send at Main " << std::endl; 
 		std::cout << "Checking for Messages: " << commint->CheckForMessage(0) << std::endl; 
 		sleep(7);
