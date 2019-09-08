@@ -100,7 +100,7 @@ int main()
 		std::cout << std::endl; 
 		delete newMsg; 
 		messageCheck = commint->CheckForMessage(0);
-		std::cout << "check for message result in main " << CheckForMessage(0) << std::endl; 
+		std::cout << "check for message result in main " << commint->CheckForMessage(0) << std::endl; 
 	}
 
 	sleep(100);
