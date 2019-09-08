@@ -31,7 +31,7 @@ int main()
 	// ROS initializations
 	int argc = 0;
 	char ** argv; 
-	ros::init(argc, argv, "leathrum");
+	ros::init(argc, argv, "ntiana");
 
 	ros::NodeHandle * nh = new ros::NodeHandle; 
 
@@ -65,13 +65,14 @@ int main()
 	std::cout << "After Send Broadcast call " << std::endl << std::flush; 
 
 	int counter = 0; 
+	ros::spinOnce();
 	// Send 5 Point-to-Point Messages 
 	while(counter < 5)	
 	{
 		ros::spinOnce();
 		timeLocal = boost::posix_time::second_clock::local_time();
 		msg->Initialize( 1, 'd', 32.657);
-		commint->SendMessage(rand() < RAND_MAX /2 ? "Ntiana" : "OldLeathrum", msg);
+		commint->SendMessage(rand() < RAND_MAX /2 ? "Leathrum" : "OldLeathrum", msg);
 		//commint->SendMessage("OldLeathrum", msg);
 		std::cout << "After this PtoP Send at Main " << std::endl; 
 		sleep(7);
