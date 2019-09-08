@@ -29,11 +29,11 @@ void BaseComm::Init()
 	std::string friendlyName; 
 	int numAs;
 	inf >> numAs; 
-	
+	std::cout << "Basecomm init " << std::endl; 
 	while((inf>> id).good() && (inf>> friendlyName).good())
 	{
 	//	inf >> id; inf >> friendlyName;
-		//std::cout << id << " " << friendlyName << std::endl << std::flush; 
+		std::cout << id << " " << friendlyName << std::endl << std::flush; 
 		nameIDs.insert(std::make_pair(friendlyName,id));
 	}
 	inf.close(); 

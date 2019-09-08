@@ -39,8 +39,9 @@ void RosComm::Setup()
 	for(int i = 0; i < nameIDs.size(); i++)
 	{
 		std::cout << "i : " << i << "comm " << _myCommRow[i] << std::endl; 
-		if(_myCommRow[i] != GetMyId() && _myCommRow[i] == 'R')
+		if(it->second!= GetMyId() && _myCommRow[it->second] == 'R')
 		{
+			std::cout << "Pushing  a publisher " << it->second << std::endl; 
 			ros::Publisher * newPub = new ros::Publisher(_nh->advertise<std_msgs::Int32MultiArray>(it->first, 100));
 			_publishers.insert(std::make_pair(it->second, newPub));
 		}
@@ -76,6 +77,7 @@ int RosComm::SendPtoP(int * dataBuffer, std::string dest)
 		if(it->first == dest)
 		{
 			id = it->second; 
+			std::cout << "ROS id found " << id << std::endl; 
 			break;
 		}
 		it++;
@@ -85,6 +87,7 @@ int RosComm::SendPtoP(int * dataBuffer, std::string dest)
 	it2 = _publishers.begin();
 	for(int i = 0; i < _publishers.size(); i++)
 	{
+		std::cout << "iterator " << it2->first << std::endl; 
 		if(id == it2->first)
 		{
 			(it2->second)->publish(dataArray);
