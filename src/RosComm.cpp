@@ -31,7 +31,7 @@ void RosComm::Setup()
 	}
 
 	// Create Listeners 
-	subPtoP = _nh->subscribe("Leathrum", 1000, &RosComm::messageCallback, this);
+	subPtoP = _nh->subscribe(topicPtoP, 1000, &RosComm::messageCallback, this);
 	//ros::Subscriber subBroadcast = _nh->subscribe("Broadcast", 1000, &RosComm::messageCallback, this);
 
 	// Create Publishers
