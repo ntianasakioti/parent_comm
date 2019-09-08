@@ -25,7 +25,7 @@ bool CommInt::CheckForMessage(int moduleId)
 int CommInt::SendMessage(std::string dest, Message * msg)
 {
 	// Set Framework Message Header parameters
-	msg->SetId(_ASId, _ASId, -1);
+	msg->SetId(_ASId);
 	msg->SetSourceId(_ASId, _moduleId);
 
 	if(dest == "All")

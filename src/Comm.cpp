@@ -256,8 +256,15 @@ int Comm::SendBd(Message * msg)
 		dataBuffer[2] = (int) commTable[id][it->second];
 		dataBuffer[7] = it->second;
 		dataBuffer[8] = dataBuffer[1];
+
+		int counter = 0; 
 		
-		success = success == getPtr(commTable[id][it->second])->SendPtoP(dataBuffer, it->first);
+		while(success == 0 && counter < 3)
+		{
+			success = (getPtr(commTable[id][it->second])->SendPtoP(dataBuffer,it->first)); 
+			counter++;
+			sleep(5);
+		}
 		sleep(7);
 		it++; 
 	}

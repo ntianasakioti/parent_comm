@@ -3,23 +3,14 @@
 int Message::_id = 0;
 int Message::_headerSize = 9; 
 
-void Message::SetId(int msgASId, int myASId, int msgId)
+void Message::SetId(int ASid)
 {
     // If the AS ids match, then we need to increment the static id 
-    std::cout << "Setting id currently " << _id;
-    if( msgASId == myASId)
+    if(_msgIdFlag == false)
     {
-        _id++; 
-        std::cout << " now: " << _id << std::endl;  
-        _msgId = std::make_pair(msgASId, _id);
+        _msgIdFlag = true; 
+        _msgId = std::make_pair(ASid, _id++);
     }
-    // If the AS ids don't match it, then we set the id using the buffer information provided
-    // by the parameters
-    else
-    {
-        _msgId = std::make_pair(msgASId, msgId);
-    }
-     
 }
 
 std::tuple<int,int> Message::GetMsgId()

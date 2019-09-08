@@ -24,7 +24,7 @@ public:
 	virtual Message * Clone() = 0; 
 
 	// Setters and Getters for header attributed
-	void SetId(int msgASId, int myASId, int msgId);
+	void SetId(int ASid);
 	std::tuple<int,int> GetMsgId();
 
 	void SetSourceId(int ASId, int moduleId);
@@ -58,6 +58,7 @@ protected:
 	char _commType; 																		// communication type (B for Bluetooth, R for Ros)	
 	int _msgDataSize; 																		// message size 
 	int _msgType; 
+	bool _msgIdFlag = false; 
 
 private:	
 	

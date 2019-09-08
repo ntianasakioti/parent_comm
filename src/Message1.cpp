@@ -5,7 +5,6 @@ Message1::Message1()
 {
     // All messages need to have the following two set" 
     SetMsgType(0);
-	SetId(1,1,0);
 
    // _data = " ";
     _randomNum = 0;
