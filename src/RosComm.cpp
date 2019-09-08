@@ -88,14 +88,15 @@ int RosComm::SendPtoP(int * dataBuffer, std::string dest)
 		if(id == it2->first)
 		{
 			(it2->second)->publish(dataArray);
+			std::cout << "Ros success in sending " << std::endl;
 			ros::spinOnce(); 
 			return 1; 
 		}
+		it2++;
 	}
 
 	ros::spinOnce();
-	std::cout << "Ros success in sending " << std::endl; 
-	return 1;
+	return 0;
 }
 
 /* int RosComm::SendBd(int * dataBuffer)

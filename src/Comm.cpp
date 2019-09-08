@@ -312,10 +312,8 @@ BaseComm * Comm::getPtr(char type)
 int Comm::GetId(std::string name)
 {
 	std::map<std::string,int>::iterator it = nameIdMap.begin();
-	std::cout << "Grabing AS id " << std::endl;
 	for(int i = 0 ; i < nameIdMap.size(); i++)
 	{
-		std::cout << "i " << i << " name " << name << " " << it->first << std::endl; 
 		if(it->first == name) 
 		{
 			return it->second;
