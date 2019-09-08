@@ -20,6 +20,7 @@ public:
 	virtual void DeSerialize(int * dataBuf) = 0; 
 	virtual int GetSize() = 0; 
 	virtual void printData() = 0; 
+	virtual Message * Clone() = 0; 
 	std::string GetSender();
 	void SetId(int msgASId, int myASId, int msgId);
 	void SetSourceId(int ASId, int moduleId);

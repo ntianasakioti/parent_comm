@@ -12,10 +12,22 @@ Message1::Message1()
     _character = ' ';
     _secondNum = 0.0;
 }
+Message1::Message1(Message1 & msg)
+{
+	_randomNum = msg.getRandomNum();
+	_character = msg.getCharacter();
+	_secondNum = msg.getSecondNum();
+
+}
 
 Message1::~Message1()
 {
 
+}
+
+Message * Message1::Clone()
+{
+	return new Message1(*this);
 }
 
 void Message1::printData()
@@ -209,4 +221,19 @@ void Message1::DeSerialize(int * dataBuf)
     dataRef = (int*) (&_secondNum);
     for(int i = 0; i < sizeof(_secondNum)/sizeof(int); i++){
         dataRef[i] = dataBuf[index++];}
+}
+
+int Message1::getRandomNum()
+{
+	return _randomNum;
+}
+
+char Message1::getCharacter()
+{
+	return _character;
+}
+    
+double Message1::getSecondNum()
+{
+	return _secondNum; 
 }

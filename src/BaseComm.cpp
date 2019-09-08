@@ -60,12 +60,8 @@ bool BaseComm::CheckForMessage(int moduleId)
 Message * BaseComm::GetMessage(int moduleId)
 {
 	MutexLock();
-	Message * newMsg = getMsgFromId(messageBacklog[moduleId].at(0)->GetType());
 
-
-	newMsg = (Message *) malloc(sizeof(messageBacklog[moduleId].at(0)));
-	std::memcpy(newMsg, messageBacklog[0].at(0), sizeof(messageBacklog[moduleId].at(0)));
-	free(messageBacklog[moduleId].at(0));
+	Message * newMsg = messageBacklog[moduleId].at(0)->Clone();
 	messageBacklog[moduleId].erase(messageBacklog[moduleId].begin());
 	MutexUnlock();
 

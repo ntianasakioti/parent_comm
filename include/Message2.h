@@ -7,12 +7,18 @@ class Message2 : public Message
 {
 public:
     Message2();
+    Message2(Message2 & msg);
     ~Message2();
+    Message * Clone();
     void Initialize(std::string data, char character, double firstNum, std::string data2, float secondNum);
     void Serialize(int * dataAddress);
     void DeSerialize(int * dataAddress);
     int GetSize(); 
     void printData();
+
+    char getCharacter();
+    double getFirstNum();
+    float getSecondNum(); 
 
 
 private:
