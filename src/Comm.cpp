@@ -265,7 +265,7 @@ int Comm::SendBd(Message * msg)
 			counter++;
 			sleep(5);
 		}
-		sleep(7);
+		success = 0; 
 		it++; 
 	}
 	return success; 

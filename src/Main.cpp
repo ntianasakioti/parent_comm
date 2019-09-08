@@ -66,13 +66,14 @@ int main()
 
 	int counter = 0; 
 	ros::spinOnce();
+	Message1 * msg2 = new Message1();
+	msg->Initialize( 2, 'f', 29.5);
 	// Send 5 Point-to-Point Messages 
 	while(counter < 5)	
 	{
 		ros::spinOnce();
 		timeLocal = boost::posix_time::second_clock::local_time();
-		msg->Initialize( 1, 'd', 32.657);
-		commint->SendMessage(rand() < RAND_MAX /2 ? "Ntiana" : "OldLeathrum", msg);
+		commint->SendMessage(rand() < RAND_MAX /2 ? "Ntiana" : "OldLeathrum", msg2);
 		//commint->SendMessage("OldLeathrum", msg);
 		std::cout << "After this PtoP Send at Main " << std::endl; 
 		sleep(7);
