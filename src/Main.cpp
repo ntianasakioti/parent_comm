@@ -67,7 +67,7 @@ int main()
 	int counter = 0; 
 	ros::spinOnce();
 	Message1 * msg2 = new Message1();
-	msg->Initialize( 2, 'f', 29.5);
+	msg2->Initialize( 2, 'f', 29.5);
 	// Send 5 Point-to-Point Messages 
 	while(counter < 5)	
 	{

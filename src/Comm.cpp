@@ -225,7 +225,7 @@ int Comm::SendPtoP(Message  * msg, std::string dest)
 int Comm::SendBd(Message * msg)
 {
 	std::cout << "In send Bd " << std::endl; 
-	bool success = true; 
+	bool success = false; 
 
 	// Create message data buffer
 	int bufferSize = msg->GetSize() + msg->GetHeaderSize(); 
@@ -245,6 +245,7 @@ int Comm::SendBd(Message * msg)
 
     for(int i = 0; i < nameIdMap.size(); i++)
 	{
+		std::cout << "it->second " << it->second << " id " << id << std::endl; 
 		if(it->second == id)
 		{
 			it++;
