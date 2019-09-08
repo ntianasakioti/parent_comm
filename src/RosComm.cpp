@@ -123,8 +123,6 @@ void RosComm::messageCallback(const std_msgs::Int32MultiArray::ConstPtr& array)
 	}
 
 	// call function to update message log
-	MutexLock();
 	UpdateMessageLog(buf, buf[6]);
-	MutexUnlock();
 	delete buf; 
 }

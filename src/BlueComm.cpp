@@ -131,9 +131,7 @@ void BlueComm::ListeningThread()
 		//msg->SetHeaderAttr(buf[1], buf[2], buf[3], source, dest);
 		//msg->DeSerialize(buf);
 		std::cout << "BLUETOOTH HEARD SOMETHING " << std::endl; 
-		MutexLock();
 		UpdateMessageLog(buf, buf[6]);
-		MutexUnlock();
 		delete buf; 
 
 		counter++; 
