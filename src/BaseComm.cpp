@@ -72,7 +72,7 @@ void BaseComm::UpdateMessageLog(int  * dataBuffer, int moduleId)
 {
 	std::cout << "Pushing back a message to module " << moduleId << std::endl; 
 	Message * newMsg = _fcnPtr(dataBuffer[3]);
-	std::cout << "id " <<< dataBuffer[0] << " " << dataBuffer[1] << std::endl; 
+	std::cout << "id " << dataBuffer[0] << " " << dataBuffer[1] << std::endl; 
 	newMsg->SetHeaderAttr(std::make_pair(dataBuffer[0], dataBuffer[1]),dataBuffer[2], dataBuffer[3], dataBuffer[4], 
 	std::make_pair(dataBuffer[5], dataBuffer[6]), std::make_pair(dataBuffer[7], dataBuffer[8]));
 	newMsg->DeSerialize(dataBuffer); 
