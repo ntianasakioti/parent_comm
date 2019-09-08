@@ -88,7 +88,8 @@ int main()
 	// when should the message be deleted 
 	std::cout << "After deleting the message" << std::endl; 
 	ros::spinOnce();
-	while( commint->CheckForMessage(0) == true)
+	bool messageCheck = commint->CheckForMessage(0);
+	while( messageCheck == true)
 	{
 		std::cout << "There is a message, I am taking it out " << std::endl; 
 		Message * newMsg =  commint->GetMessage(0);
@@ -98,6 +99,8 @@ int main()
 		newMsg->printData();
 		std::cout << std::endl; 
 		delete newMsg; 
+		messageCheck = commint->CheckForMessage(0);
+		std::cout << "check for message result in main " << std::endl; 
 	}
 
 	sleep(100);

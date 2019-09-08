@@ -6,9 +6,11 @@ int Message::_headerSize = 9;
 void Message::SetId(int msgASId, int myASId, int msgId)
 {
     // If the AS ids match, then we need to increment the static id 
+    std::cout << "Setting id currently " << _id;
     if( msgASId == myASId)
     {
         _id++; 
+        std::cout << " now: " << _id << std::endl;  
         _msgId = std::make_pair(msgASId, _id);
     }
     // If the AS ids don't match it, then we set the id using the buffer information provided
