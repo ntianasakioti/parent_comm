@@ -3,11 +3,6 @@
 int Message::_id = 0;
 int Message::_headerSize = 9; 
 
-std::string Message::GetSender()
-{
-    return "who";
-}
-
 void Message::SetId(int msgASId, int myASId, int msgId)
 {
     // If the AS ids match, then we need to increment the static id 
@@ -23,6 +18,11 @@ void Message::SetId(int msgASId, int myASId, int msgId)
         _msgId = std::make_pair(msgASId, msgId);
     }
      
+}
+
+std::tuple<int,int> Message::GetMsgId()
+{
+    return _msgId;
 }
 
 void Message::SetSourceId(int ASId, int moduleId)
@@ -41,9 +41,19 @@ void Message::SetDestId(int ASId, int moduleId)
     _destId = std::make_pair(ASId, moduleId);
 }
 
+std::tuple<int,int> Message::GetDestId()
+{
+    return _destId;
+}
+
 void Message::SetCommType(char commType)
 {
     _commType = commType;
+}
+
+char Message::GetCommType()
+{
+    return _commType;
 }
 	
 void Message::SetMsgDataSize(int msgDataSize)
@@ -51,12 +61,17 @@ void Message::SetMsgDataSize(int msgDataSize)
     _msgDataSize = msgDataSize;
 }
 
+int Message::GetMsgDataSize()
+{
+    return _msgDataSize;
+}
+
 void Message::SetMsgType(int msgType)
 {
     _msgType = msgType; 
 }
 
-int Message::GetType()
+int Message::GetMsgType()
 {
     return _msgType;
 }
@@ -85,9 +100,9 @@ int Message::GetHeaderSize()
 
 void Message::SetHeaderAttr(std::tuple<int,int> msgId, int commType, int msgType, int msgSize, std::tuple<int, int> sourceId, std::tuple<int,int> destId)
 {
-  //  std::cout << "Setting my attributes " <<  std::get<0>(msgId) << " " << std::get<1>(msgId) 
- //   << commType << " " << msgType << " " << msgSize << " " << std::get<0>(sourceId) << " "
-  //  << std::get<1>(sourceId)<< " " << std::get<0>(destId) << " " << std::get<1>(destId) << std::endl;
+    std::cout << "Setting my attributes " <<  std::get<0>(msgId) << " " << std::get<1>(msgId) 
+    << commType << " " << msgType << " " << msgSize << " " << std::get<0>(sourceId) << " "
+    << std::get<1>(sourceId)<< " " << std::get<0>(destId) << " " << std::get<1>(destId) << std::endl;
     _msgId = std::make_tuple(std::get<0>(msgId), std::get<1>(msgId));
     _sourceId = std::make_tuple(std::get<0>(sourceId), std::get<1>(sourceId));
     _destId = std::make_tuple(std::get<0>(destId), std::get<1>(destId));

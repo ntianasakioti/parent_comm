@@ -1,11 +1,12 @@
 #include "BlueComm.h"
 
 #include <boost/date_time.hpp>
-BlueComm::BlueComm()
+BlueComm::BlueComm(Message * (*fcnPtr)(int))
 {
 	std::cout << "Object created" << std::endl << std::flush; 
 	Init();
 	InitComm(); 
+	setMsgFcnPtr(fcnPtr);
 }
 
 BlueComm::~BlueComm()

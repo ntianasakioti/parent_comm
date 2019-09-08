@@ -5,7 +5,7 @@ Message1::Message1()
 {
     // All messages need to have the following two set" 
     SetMsgType(0);
-
+	SetId(1,1,0);
 
    // _data = " ";
     _randomNum = 0;
@@ -17,6 +17,8 @@ Message1::Message1(Message1 & msg)
 	_randomNum = msg.getRandomNum();
 	_character = msg.getCharacter();
 	_secondNum = msg.getSecondNum();
+	SetHeaderAttr(msg.GetMsgId(), msg.GetCommType(), msg.GetMsgType(), msg.GetMsgDataSize(), 
+	msg.GetSourceId(), msg.GetDestId());
 
 }
 

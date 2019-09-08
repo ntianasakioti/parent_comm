@@ -143,14 +143,14 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
 		if(commTable[id][i] == 'R' && Rflag == false)
 		{
 			std::cout << "Creating RosComm" << std::endl; 
-			BaseCommPtrs.insert(std::make_pair('R', new RosComm(commTable[id], nh)));
+			BaseCommPtrs.insert(std::make_pair('R', new RosComm(commTable[id], nh,fcnPtr)));
 		//	BaseCommPtrs.push_back(new RosComm());
 			Rflag = true; 
 		}
 		else if(commTable[id][i] == 'B' && Bflag == false)
 		{
 			std::cout << "Creating BlueComm" << std::endl; 
-			BaseCommPtrs.insert(std::make_pair('B', new BlueComm()));
+			BaseCommPtrs.insert(std::make_pair('B', new BlueComm(fcnPtr)));
 			//BaseCommPtrs.push_back(new BlueComm());
 			Bflag = true; 
 		}

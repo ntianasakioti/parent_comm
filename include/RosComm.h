@@ -17,7 +17,7 @@
 class RosComm: public BaseComm
 {
 public:
-	RosComm(char * myCommRow, ros::NodeHandle * nh);
+	RosComm(char * myCommRow, ros::NodeHandle * nh, Message * (*fcnPtr)(int));
 	~RosComm(); 
 	void Setup();
 	//void InitComm(int argc, char ** argv);

@@ -16,24 +16,38 @@
 class Message
 {
 public: 
+	// Virtual functions to be implemented in child classes
 	virtual void Serialize(int * dataBuf) = 0; 
 	virtual void DeSerialize(int * dataBuf) = 0; 
 	virtual int GetSize() = 0; 
 	virtual void printData() = 0; 
 	virtual Message * Clone() = 0; 
-	std::string GetSender();
+
+	// Setters and Getters for header attributed
 	void SetId(int msgASId, int myASId, int msgId);
+	std::tuple<int,int> GetMsgId();
+
 	void SetSourceId(int ASId, int moduleId);
 	std::tuple<int, int> GetSourceId();
+
 	void SetDestId(int ASId, int moduleId);
+	std::tuple<int,int> GetDestId(); 
+
 	void SetCommType(char commType);
+	char GetCommType();
+
 	void SetMsgDataSize(int msgDataSize);
+	int GetMsgDataSize();
+
 	void SetMsgType(int msgType);
-	int GetType();
+	int GetMsgType();
+
 	void SetBufHeader(int * buf);
-	int GetHeaderSize();
 	void SetHeaderAttr(std::tuple<int,int> msgId, int commType, int msgSize, int msgType, std::tuple<int, int> sourceId, std::tuple<int,int> destId);
 
+	int GetHeaderSize();
+
+	// Header size
 	static int _headerSize;																	// header size
 
 protected:
