@@ -19,7 +19,7 @@
 class BlueComm : public BaseComm 
 {
 public:
-	BlueComm();
+	BlueComm(Message * (*fcnPtr)(int));
 	/*
 		BlueComm
 			Parameters: 
