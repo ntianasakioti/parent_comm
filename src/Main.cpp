@@ -31,7 +31,7 @@ int main()
 	// ROS initializations
 	int argc = 0;
 	char ** argv; 
-	ros::init(argc, argv, "Leathrum");
+	ros::init(argc, argv, "OldLeathrum");
 
 	ros::NodeHandle * nh = new ros::NodeHandle; 
 
@@ -73,7 +73,7 @@ int main()
 	{
 		ros::spinOnce();
 		timeLocal = boost::posix_time::second_clock::local_time();
-		commint->SendMessage(rand() < RAND_MAX /2 ? "Ntiana" : "OldLeathrum", msg2);
+		commint->SendMessage(rand() < RAND_MAX /2 ? "Ntiana" : "Leathrum", msg2);
 		//commint->SendMessage("OldLeathrum", msg);
 		std::cout << "After this PtoP Send at Main " << std::endl; 
 		sleep(7);
@@ -92,6 +92,7 @@ int main()
 	bool messageCheck = commint->CheckForMessage(0);
 	while( messageCheck == true)
 	{
+		ros::spinOnce(); 
 		std::cout << "There is a message, I am taking it out " << std::endl; 
 		Message * newMsg =  commint->GetMessage(0);
 		std::tuple<int,int> sourceId = newMsg->GetSourceId();  
@@ -100,10 +101,13 @@ int main()
 		newMsg->printData();
 		std::cout << std::endl; 
 		delete newMsg; 
+		ros::spinOnce();
 		messageCheck = commint->CheckForMessage(0);
 		std::cout << "check for message result in main " << commint->CheckForMessage(0) << std::endl; 
+		sleep(5);
 	}
 
+	std::cout << "after while loop at end of main" << std::endl; 
 	sleep(100);
 
 	return 0;

@@ -42,7 +42,7 @@ protected:
 	std::map<std::string, int> nameIDs;
 
 private:
-	int ASid = 1; 
+	int ASid = 0; 
 	static std::vector<std::vector<Message*>> messageBacklog;
 	static std::mutex messageMutex; 
 	static Message * (*_fcnPtr)(int);

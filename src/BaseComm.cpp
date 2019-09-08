@@ -50,11 +50,9 @@ bool BaseComm::CheckForMessage(int moduleId)
 		MutexUnlock();
 		return true;
 	}
-	else
-	{
-		MutexUnlock();  
-		return false;
-	}
+
+	MutexUnlock();  
+	return false;
 }
 
 Message * BaseComm::GetMessage(int moduleId)

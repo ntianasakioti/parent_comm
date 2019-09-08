@@ -4,7 +4,7 @@ CommInt::CommInt(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
 {
 	//TO DO: read module id from file
 	_moduleId = 0;
-	_ASId = 1; 
+	_ASId = 0; 
 
 	Comm::GetInstance()->Init(fcnPtr, nh); 
 	// Create singular Comm instance if it hasn't been 
