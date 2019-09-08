@@ -130,7 +130,7 @@ void BlueComm::ListeningThread()
 		//std::tuple<int, int> dest = std::make_tuple(buf[6], buf[7]);
 		//msg->SetHeaderAttr(buf[1], buf[2], buf[3], source, dest);
 		//msg->DeSerialize(buf);
-
+		std::cout << "BLUETOOTH HEARD SOMETHING " << std::endl; 
 		MutexLock();
 		UpdateMessageLog(buf, buf[6]);
 		MutexUnlock();

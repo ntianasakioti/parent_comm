@@ -34,6 +34,7 @@ private:
 	std::thread ltThread;												// listening thread
 	char * _myCommRow; 
 	std::map<int, ros::Publisher *> _publishers;
+	ros::Subscriber subPtoP;
 };
 
 #endif

@@ -16,7 +16,8 @@ Message2::~Message2()
 {
     
 }
-
+void Message2::printData()
+{}
 void Message2::Initialize(std::string data, char character, double firstNum, std::string data2, float secondNum)
 {
     _data = data;

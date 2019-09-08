@@ -31,7 +31,7 @@ int main()
 	// ROS initializations
 	int argc = 0;
 	char ** argv; 
-	ros::init(argc, argv, "talker");
+	ros::init(argc, argv, "leathrum");
 
 	ros::NodeHandle * nh = new ros::NodeHandle; 
 
@@ -57,11 +57,10 @@ int main()
 
 	//msg  = "Broadcast from Leathrum at " + to_simple_string(timeLocal.time_of_day()); 
 
- 
+	ros::spinOnce();
 	// Sending Broadcast message
 	std::cout << "Before send bd " << std::endl << std::flush; 
 	commint->SendMessage("All", msg);
-
 	sleep(7);
 	std::cout << "After Send Broadcast call " << std::endl << std::flush; 
 
@@ -69,6 +68,7 @@ int main()
 	// Send 5 Point-to-Point Messages 
 	while(counter < 5)	
 	{
+		ros::spinOnce();
 		timeLocal = boost::posix_time::second_clock::local_time();
 		msg->Initialize( 1, 'd', 32.657);
 		commint->SendMessage(rand() < RAND_MAX /2 ? "Ntiana" : "OldLeathrum", msg);
@@ -77,7 +77,7 @@ int main()
 		sleep(7);
 		counter++;
 	}
-
+	ros::spinOnce();
 	std::cout << "After all Send PtoP in main " << std::endl; 
 	//msg  = "Broadcast from Leathrum at " + to_simple_string(timeLocal.time_of_day()); 
 	delete msg; 														/// when perror is done this is what brings the error free(): corrupted unsorted chunks: 0x00000000018b4c20 ***
@@ -85,15 +85,17 @@ int main()
 	// let's try serializing only once. before the commintSend function is called. and change all sends to sending an int 8 buffer 
 	// 
 	// when should the message be deleted 
-
 	std::cout << "After deleting the message" << std::endl; 
-
+	ros::spinOnce();
 	while( commint->CheckForMessage(0) == true)
 	{
 		std::cout << "There is a message, I am taking it out " << std::endl; 
 		Message * newMsg =  commint->GetMessage(0);
 		std::tuple<int,int> sourceId = newMsg->GetSourceId();  
 		std::cout << "it came from " << std::get<0>(sourceId) << " " << std::get<1>(sourceId) << std::endl; 
+		std::cout << "printing data " ;
+		newMsg->printData();
+		std::cout << std::endl; 
 		delete newMsg; 
 	}
 

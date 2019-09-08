@@ -18,10 +18,9 @@ Message1::~Message1()
 
 }
 
-std::string Message1::getData()
+void Message1::printData()
 {
-	return "blah";
-    //return _data;
+	std::cout << _randomNum << " " << _character << " " << _secondNum << std::endl; 
 }
 
 void Message1::Initialize(int num1, char char1, double num2)
@@ -46,7 +45,7 @@ void Message1::Serialize(int * dataBuf)
     int index = Message::_headerSize;
 	int *dataRef;
 
-    std::cout << "HeaderSize " << Message::_headerSize << std::endl; 
+    //std::cout << "HeaderSize " << Message::_headerSize << std::endl; 
 
 
 	/// MY STRING TO INT ARRAY CONVERSION ///

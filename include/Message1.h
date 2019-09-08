@@ -13,7 +13,7 @@ public:
     void Serialize(int * dataAddress);
     void DeSerialize(int * dataAddress);
     int GetSize();
-    std::string getData();
+    void printData();
 
 private:
    int _randomNum; 

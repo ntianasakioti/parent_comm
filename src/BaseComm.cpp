@@ -29,7 +29,7 @@ void BaseComm::Init()
 	std::string friendlyName; 
 	int numAs;
 	inf >> numAs; 
-	std::cout << "Basecomm init " << std::endl; 
+	//std::cout << "Basecomm init " << std::endl; 
 	while((inf>> id).good() && (inf>> friendlyName).good())
 	{
 	//	inf >> id; inf >> friendlyName;

@@ -12,6 +12,7 @@ public:
     void Serialize(int * dataAddress);
     void DeSerialize(int * dataAddress);
     int GetSize(); 
+    void printData();
 
 
 private:

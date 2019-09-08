@@ -250,8 +250,8 @@ int Comm::SendBd(Message * msg)
 			it++;
 			continue;
 		}	
-		std::cout << "id " << id  << " " << "i " << i << std::endl << std::flush; 	
-		std::cout << "dest name " << it->first << std::endl << std::flush;
+	//	std::cout << "id " << id  << " " << "i " << i << std::endl << std::flush; 	
+	//	std::cout << "dest name " << it->first << std::endl << std::flush;
 		// could keep editing the buffer for it to have correct destination, and type
 		dataBuffer[2] = (int) commTable[id][it->second];
 		dataBuffer[7] = it->second;

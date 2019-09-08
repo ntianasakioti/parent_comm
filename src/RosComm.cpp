@@ -31,17 +31,17 @@ void RosComm::Setup()
 	}
 
 	// Create Listeners 
-	ros::Subscriber subPtoP = _nh->subscribe(topicPtoP, 1000, &RosComm::messageCallback, this);
-	ros::Subscriber subBroadcast = _nh->subscribe("Broadcast", 1000, &RosComm::messageCallback, this);
+	subPtoP = _nh->subscribe("Leathrum", 1000, &RosComm::messageCallback, this);
+	//ros::Subscriber subBroadcast = _nh->subscribe("Broadcast", 1000, &RosComm::messageCallback, this);
 
 	// Create Publishers
 	it = nameIDs.begin(); 
 	for(int i = 0; i < nameIDs.size(); i++)
 	{
-		std::cout << "i : " << i << "comm " << _myCommRow[i] << std::endl; 
+		//std::cout << "i : " << i << "comm " << _myCommRow[i] << std::endl; 
 		if(it->second!= GetMyId() && _myCommRow[it->second] == 'R')
 		{
-			std::cout << "Pushing  a publisher " << it->second << std::endl; 
+		//	std::cout << "Pushing  a publisher " << it->second << std::endl; 
 			ros::Publisher * newPub = new ros::Publisher(_nh->advertise<std_msgs::Int32MultiArray>(it->first, 100));
 			_publishers.insert(std::make_pair(it->second, newPub));
 		}
@@ -77,7 +77,7 @@ int RosComm::SendPtoP(int * dataBuffer, std::string dest)
 		if(it->first == dest)
 		{
 			id = it->second; 
-			std::cout << "ROS id found " << id << std::endl; 
+		//	std::cout << "ROS id found " << id << std::endl; 
 			break;
 		}
 		it++;
@@ -87,7 +87,7 @@ int RosComm::SendPtoP(int * dataBuffer, std::string dest)
 	it2 = _publishers.begin();
 	for(int i = 0; i < _publishers.size(); i++)
 	{
-		std::cout << "iterator " << it2->first << std::endl; 
+		//std::cout << "iterator " << it2->first << std::endl; 
 		if(id == it2->first)
 		{
 			(it2->second)->publish(dataArray);
@@ -110,23 +110,21 @@ int RosComm::SendPtoP(int * dataBuffer, std::string dest)
 */
 void RosComm::messageCallback(const std_msgs::Int32MultiArray::ConstPtr& array)
 {
+	std::cout << "ROS HEARD SOMETHING " << std::endl; 
 	// check that message is not a broadcast from "me"
 	std::vector<int>::const_iterator it = array->data.begin(); 
-	if (*it != GetMyId())
+	int * buf = new int[array->data.size()];
+	// copy serialized content to buffer
+	for(int i = 0; i < array->data.size(); i++)
 	{
-		int * buf = new int[array->data.size()];
-		// copy serialized content to buffer
-		for(int i = 0; i < array->data.size(); i++)
-		{
-			//std::cout << "temp buf " << array[i] << std::endl; 
-			buf[i] =*it;
-			it++;
-		}
-
-		// call function to update message log
-		MutexLock();
-		UpdateMessageLog(buf, buf[6]);
-		MutexUnlock();
-		delete buf; 
+		//std::cout << "temp buf " << array[i] << std::endl; 
+		buf[i] =*it;
+		it++;
 	}
+
+	// call function to update message log
+	MutexLock();
+	UpdateMessageLog(buf, buf[6]);
+	MutexUnlock();
+	delete buf; 
 }
