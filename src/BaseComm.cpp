@@ -17,7 +17,7 @@ Message * BaseComm::getMsgFromId(int id)
 	}
 }
 
-std::vector<std::vector<Message*>> BaseComm::messageBacklog; 
+std::vector<std::queue<Message*>> BaseComm::messageBacklog; 
 Message * (*BaseComm::_fcnPtr)(int);
 std::mutex BaseComm::messageMutex;
 
@@ -59,8 +59,8 @@ Message * BaseComm::GetMessage(int moduleId)
 {
 	MutexLock();
 
-	Message * newMsg = messageBacklog[moduleId].at(0)->Clone();
-	messageBacklog[moduleId].erase(messageBacklog[moduleId].begin());
+	Message * newMsg = messageBacklog[moduleId].front()->Clone();
+	messageBacklog[moduleId].pop();
 	MutexUnlock();
 
 	return newMsg;
@@ -76,7 +76,7 @@ void BaseComm::UpdateMessageLog(int  * dataBuffer, int moduleId)
 	newMsg->DeSerialize(dataBuffer); 
 	MutexLock();
 	std::cout << "locked in update message log" << std::endl; 
-	messageBacklog[moduleId].push_back(newMsg);
+	messageBacklog[moduleId].push(newMsg);
 	MutexUnlock(); 
 	std::cout << "unlocked in update message log " << std::endl;
 	std::cout << "check for message reuslt " << CheckForMessage(0) << std::endl; 
@@ -86,7 +86,7 @@ void BaseComm::UpdateMsgLogNum()
 {
 	
 	// Create and add anothe vector to MessageBacklog
-	std::vector<Message *> anotherMsgLog; 
+	std::queue<Message *> anotherMsgLog; 
 	messageBacklog.push_back(anotherMsgLog);
 }
 

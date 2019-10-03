@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <cstring>
+#include <queue>
 #include "Message.h"
 #include "Message1.h"
 #include "Message2.h"
@@ -43,7 +44,7 @@ protected:
 
 private:
 	int ASid = 0; 
-	static std::vector<std::vector<Message*>> messageBacklog;
+	static std::vector<std::queue<Message*>> messageBacklog;
 	static std::mutex messageMutex; 
 	static Message * (*_fcnPtr)(int);
 };
