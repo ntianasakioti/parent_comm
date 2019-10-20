@@ -7,7 +7,7 @@ std::mutex BaseComm::messageMutex;
 void BaseComm::Init(int systemId)
 {
 	//ASid = systemId;
-	ASid = 0; 
+	ASid = systemId; 
 
 	std::ifstream inf("../catkin_ws/src/parent_comm/config/nameIDs.txt"); 
 

@@ -31,7 +31,7 @@ Comm * Comm::GetInstance()
 	return instance; 
 }
 
-void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId)
+void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, std::string ASname)
 {
 	std::ifstream inf("../catkin_ws/src/parent_comm/config/nameIDs.txt"); 
 
@@ -42,6 +42,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId)
 		exit(1);
 	}
 
+	systemName = ASname; 
 //	std::cout << "Opened nameIDs correctly" << std::endl;
 
 	// read number of autonomous systems to create comm table 

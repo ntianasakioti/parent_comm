@@ -6,7 +6,7 @@ CommInt::CommInt(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
 	_moduleId = 0;
 	_ASId = 0; 
 
-	Comm::GetInstance()->Init(fcnPtr, nh ,_ASId); 
+	Comm::GetInstance()->Init(fcnPtr, nh ,_ASId, friendlyName); 
 	// Create singular Comm instance if it hasn't been 
 	// created already
 	Comm::GetInstance()->AddMsgQueue();

@@ -18,6 +18,7 @@ protected:
 private:
 	int _moduleId; 
 	int _ASId; 
+	std::string friendlyName = "Leathrum";
 	//static int counter = 0;
 }; 
 
