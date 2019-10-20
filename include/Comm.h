@@ -17,13 +17,14 @@ class Comm
 {
 public:
 	static Comm * GetInstance();
-	void Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh);														
+	void Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId);														
 	int SendPtoP(Message * msg, std::string dest);																					
 	int SendBd(Message * msg);					
 	// instead of above two, could have one function
 	//Send(source?,message, destination(could be "all"))
 	bool CheckForMessage(int moduleId);
 	Message * GetMessage(int moduleId);
+	int GetNextMsgType(int moduleId);
 	void AddMsgQueue();
 	BaseComm * getPtr(char type); 
 	int GetId(std::string name);
@@ -34,7 +35,7 @@ protected:
 	static Comm * instance;
 
 private:
-	std::string systemName = "OldLeathrum";												// AS friendly name 
+	std::string systemName = "Leathrum";												// AS friendly name 
 	const char* commTableFile = 
 	"../catkin_ws/src/parent_comm/config/commTable.txt";				// Configuration file for the shared Comm 
 																		// table that lists what communication is

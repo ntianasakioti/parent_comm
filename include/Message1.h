@@ -11,7 +11,7 @@ public:
     Message1(Message1 & msg);
     void Initialize(int num1, char char1, double num2);
     ~Message1();
-    Message * Clone(); 
+    Message1 * Clone(); 
     void Serialize(int * dataAddress);
     void DeSerialize(int * dataAddress);
     int GetSize();

@@ -26,7 +26,7 @@ Message1::~Message1()
 
 }
 
-Message * Message1::Clone()
+Message1 * Message1::Clone()
 {
 	return new Message1(*this);
 }

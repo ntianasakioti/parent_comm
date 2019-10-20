@@ -4,9 +4,11 @@
 #include <string>
 #include <vector>
 #include <map>
+#ifndef Q_MOC_RUN
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
 #include <sys/socket.h>
+#endif
 #include <iostream>
 #include <thread>
 //#include <pthread.h>
@@ -19,7 +21,7 @@
 class BlueComm : public BaseComm 
 {
 public:
-	BlueComm(Message * (*fcnPtr)(int));
+	BlueComm(Message * (*fcnPtr)(int), int id);
 	/*
 		BlueComm
 			Parameters: 

@@ -1,28 +1,14 @@
 #include "BaseComm.h"
 
-Message * BaseComm::getMsgFromId(int id)
-{
-	Message1 * msg1; 
-	Message2 * msg2;
-	switch(id)
-	{
-		case 0:
-			msg1 = new Message1(); 
-			return msg1;
-			break;
-		case 1:
-			msg2 = new Message2(); 
-			return msg2;
-			break;
-	}
-}
-
 std::vector<std::queue<Message*>> BaseComm::messageBacklog; 
 Message * (*BaseComm::_fcnPtr)(int);
 std::mutex BaseComm::messageMutex;
 
-void BaseComm::Init()
+void BaseComm::Init(int systemId)
 {
+	//ASid = systemId;
+	ASid = 0; 
+
 	std::ifstream inf("../catkin_ws/src/parent_comm/config/nameIDs.txt"); 
 
 	int id;
@@ -66,6 +52,11 @@ Message * BaseComm::GetMessage(int moduleId)
 	return newMsg;
 }
 
+int BaseComm::GetNextMsgType(int moduleId)
+{
+	return messageBacklog[moduleId].front()->GetMsgType();
+}
+
 void BaseComm::UpdateMessageLog(int  * dataBuffer, int moduleId)
 {
 	std::cout << "Pushing back a message to module " << moduleId << std::endl; 
@@ -75,11 +66,11 @@ void BaseComm::UpdateMessageLog(int  * dataBuffer, int moduleId)
 	std::make_pair(dataBuffer[5], dataBuffer[6]), std::make_pair(dataBuffer[7], dataBuffer[8]));
 	newMsg->DeSerialize(dataBuffer); 
 	MutexLock();
-	std::cout << "locked in update message log" << std::endl; 
+//	std::cout << "locked in update message log" << std::endl; 
 	messageBacklog[moduleId].push(newMsg);
 	MutexUnlock(); 
-	std::cout << "unlocked in update message log " << std::endl;
-	std::cout << "check for message reuslt " << CheckForMessage(0) << std::endl; 
+//	std::cout << "unlocked in update message log " << std::endl;
+//	std::cout << "check for message reuslt " << CheckForMessage(0) << std::endl; 
 }
 
 void BaseComm::UpdateMsgLogNum()

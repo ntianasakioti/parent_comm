@@ -1,10 +1,10 @@
 #include "BlueComm.h"
 
 #include <boost/date_time.hpp>
-BlueComm::BlueComm(Message * (*fcnPtr)(int))
+BlueComm::BlueComm(Message * (*fcnPtr)(int), int id)
 {
-	std::cout << "Object created" << std::endl << std::flush; 
-	Init();
+//	std::cout << "Object created" << std::endl << std::flush; 
+	Init(id);
 	InitComm(); 
 	setMsgFcnPtr(fcnPtr);
 }
@@ -24,7 +24,7 @@ void BlueComm::Setup()
 		exit(1);
 	}
 
-	std::cout << "Opened bdAddresses correctly" << std::endl;
+//	std::cout << "Opened bdAddresses correctly" << std::endl;
 
 	int id;
 	std::string address;
@@ -43,13 +43,13 @@ void BlueComm::InitComm()
 	// Set and Create separate thread
 	Setup(); 
 
-	std::cout<< "Creating listening thread " << std::endl << std::flush; 
+//	std::cout<< "Creating listening thread " << std::endl << std::flush; 
 	
 	std::thread ltThread(&BlueComm::ListeningThread, this);
 
 	ltThread.detach();
 	
-	std::cout << "Continuing " << std::endl << std::flush; 
+//	std::cout << "Continuing " << std::endl << std::flush; 
 }
 
 void BlueComm::ListeningThread()
@@ -59,7 +59,7 @@ void BlueComm::ListeningThread()
     bool test = true; 
    // while(test == true)
     //{
-	std::cout<< "Launched my separate thread " << std::endl; 
+//	std::cout<< "Launched my separate thread " << std::endl; 
 
 	// Set up Bluetooth Socket and address parameters
 	// to listen for a message 
@@ -82,7 +82,7 @@ void BlueComm::ListeningThread()
 	int messageSize; 
 
 	// put socket to listen mode 
-	std::cout << "Waiting to listen " << std::endl;
+	//std::cout << "Waiting to listen " << std::endl;
 	listen(t,20);
 
 	// Just for testing to keep track of the loop
@@ -184,7 +184,7 @@ int BlueComm::SendPtoP(int * dataBuffer, std::string dest)
 	//std::cout << "sizes " << msg->GetHeaderSize() << " " << msg->GetSize() << std::endl; 
 	//msg->Serialize(dataBuf);
 
-	std::cout << "After serialization " << std::endl; 
+//	std::cout << "After serialization " << std::endl; 
 
 	int int_array[dataBuffer[4 ]+ 9];
 	//int int_array[msg->GetSize() + msg->GetHeaderSize()];

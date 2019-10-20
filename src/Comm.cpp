@@ -31,7 +31,7 @@ Comm * Comm::GetInstance()
 	return instance; 
 }
 
-void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
+void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId)
 {
 	std::ifstream inf("../catkin_ws/src/parent_comm/config/nameIDs.txt"); 
 
@@ -42,7 +42,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
 		exit(1);
 	}
 
-	std::cout << "Opened nameIDs correctly" << std::endl;
+//	std::cout << "Opened nameIDs correctly" << std::endl;
 
 	// read number of autonomous systems to create comm table 
 	int numAS = 0;
@@ -59,7 +59,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
 		nameIdMap.insert(std::make_pair(friendlyName,id));
 	}
 
-	std::cout << "Read and made pairs for ID maps" << std::endl; 
+//	std::cout << "Read and made pairs for ID maps" << std::endl; 
 	// create 2D Communications Table that will show the type of communication
 	// needed for two AS systems to communicate.
 	commTable = new char *[numAS];
@@ -71,7 +71,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
 
 	inf.close();
 
-	std::cout << "Created my commtable " << std::endl;
+//	std::cout << "Created my commtable " << std::endl;
 
 	// read comunication table file (commTable) to populate the commTable container
 
@@ -107,7 +107,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
 
 	inf2.close(); 
 
-	std::cout << "Populated commTable correctly " << std::endl; 
+//	std::cout << "Populated commTable correctly " << std::endl; 
 
 	std::map<std::string, int>::iterator it = nameIdMap.begin();
 	while(it != nameIdMap.end())
@@ -120,7 +120,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
 		it++;
 	}
 
-	std::cout << "Found system name id: " << id << std::endl; 
+//	std::cout << "Found system name id: " << id << std::endl; 
 
 	bool Rflag = false;
 	bool Bflag = false;  
@@ -142,15 +142,15 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh)
 	{
 		if(commTable[id][i] == 'R' && Rflag == false)
 		{
-			std::cout << "Creating RosComm" << std::endl; 
-			BaseCommPtrs.insert(std::make_pair('R', new RosComm(commTable[id], nh,fcnPtr)));
+		//	std::cout << "Creating RosComm" << std::endl; 
+			BaseCommPtrs.insert(std::make_pair('R', new RosComm(commTable[id], nh,fcnPtr, systemId)));
 		//	BaseCommPtrs.push_back(new RosComm());
 			Rflag = true; 
 		}
 		else if(commTable[id][i] == 'B' && Bflag == false)
 		{
-			std::cout << "Creating BlueComm" << std::endl; 
-			BaseCommPtrs.insert(std::make_pair('B', new BlueComm(fcnPtr)));
+		//	std::cout << "Creating BlueComm" << std::endl; 
+			BaseCommPtrs.insert(std::make_pair('B', new BlueComm(fcnPtr,systemId)));
 			//BaseCommPtrs.push_back(new BlueComm());
 			Bflag = true; 
 		}
@@ -330,4 +330,10 @@ int Comm::GetId(std::string name)
 	}
 
 	return -1; 
+}
+
+int Comm::GetNextMsgType(int moduleId)
+{
+	std::map<char, BaseComm *>::iterator it = BaseCommPtrs.begin();
+	return it->second->GetNextMsgType(moduleId);
 }

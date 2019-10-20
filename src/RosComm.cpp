@@ -1,10 +1,10 @@
 #include "RosComm.h"
 
-RosComm::RosComm(char * myCommRow, ros::NodeHandle * nh, Message * (*fcnPtr)(int))
+RosComm::RosComm(char * myCommRow, ros::NodeHandle * nh, Message * (*fcnPtr)(int), int id)
 {
 	_myCommRow = myCommRow;
 	_nh = nh; 
-	Init();
+	Init(id);
 	Setup();
 	setMsgFcnPtr(fcnPtr);
 }

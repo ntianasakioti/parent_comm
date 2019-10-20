@@ -12,6 +12,7 @@ public:
 	bool CheckForMessage(int moduleId);
 	int SendMessage(std::string dest, Message * msg);
 	Message * GetMessage(int moduleId);
+	int GetNextMsgType(int moduleId);
 protected:
 
 private:

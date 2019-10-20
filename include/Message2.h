@@ -9,10 +9,10 @@ public:
     Message2();
     Message2(Message2 & msg);
     ~Message2();
-    Message * Clone();
-    void Initialize(std::string data, char character, double firstNum, std::string data2, float secondNum);
-    void Serialize(int * dataAddress);
-    void DeSerialize(int * dataAddress);
+    Message2 * Clone();
+    void Initialize(char character, double firstNum, float secondNum);
+    void Serialize(int * dataBuf);
+    void DeSerialize(int * dataBuf);
     int GetSize(); 
     void printData();
 
@@ -23,10 +23,10 @@ public:
 
 private:
 
-   std::string _data; 
+  // std::string _data; 
    char _character;
    double _firstNum;
-   std::string _data2;
+ //  std::string _data2;
    float _secondNum;
 
 
