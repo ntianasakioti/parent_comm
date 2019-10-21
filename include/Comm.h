@@ -17,9 +17,10 @@ class Comm
 {
 public:
 	static Comm * GetInstance();
+	bool checkCommInstance();
 	void Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, std::string ASname);														
-	int SendPtoP(Message * msg, std::string dest);																					
-	int SendBd(Message * msg);					
+	int SendPtoP(int source, int sourceMod,Message * msg, std::string dest, int moduleId);																					
+	int SendBd(int source, int sourceMod, Message * msg);					
 	// instead of above two, could have one function
 	//Send(source?,message, destination(could be "all"))
 	bool CheckForMessage(int moduleId);
@@ -35,6 +36,7 @@ protected:
 	static Comm * instance;
 
 private:
+	bool commInstance = false; 
 	std::string systemName;												// AS friendly name 
 	const char* commTableFile = 
 	"../catkin_ws/src/parent_comm/config/commTable.txt";				// Configuration file for the shared Comm 

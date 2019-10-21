@@ -27,12 +27,21 @@ Comm * Comm::GetInstance()
 {
 	// Initialization on first use
 	if( instance == NULL)
+	{
 		instance = new Comm();
+	}
 	return instance; 
+}
+
+bool Comm::checkCommInstance()
+{
+	return commInstance; 
 }
 
 void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, std::string ASname)
 {
+
+	commInstance = true; 
 	std::ifstream inf("../catkin_ws/src/parent_comm/config/nameIDs.txt"); 
 
 	// if can't open file
@@ -131,7 +140,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, st
 
 
 
-	AddMsgQueue();
+	//AddMsgQueue();
 	
 	// Hard-coded testing code.
  
@@ -185,10 +194,10 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, st
 	}*/
 }
 
-int Comm::SendPtoP(Message  * msg, std::string dest)
+int Comm::SendPtoP(int source, int sourceMod, Message  * msg, std::string dest, int moduleId)
 {	
 	std::cout << "In send p to p " << std::endl << std::flush; 
-	int sourceId = GetId(systemName);
+//	int sourceId = GetId(systemName);
 	int destId = GetId(dest);
 
 	// Create message data buffer
@@ -197,8 +206,8 @@ int Comm::SendPtoP(Message  * msg, std::string dest)
 
 	// Set remainder header attributes
 	msg->SetMsgDataSize(bufferSize - msg->GetHeaderSize());
-	msg->SetDestId(GetId(dest),std::get<1>(msg->GetSourceId()));
-	msg->SetCommType(commTable[sourceId][destId]);
+	msg->SetDestId(GetId(dest),sourceMod);
+	msg->SetCommType(commTable[source][destId]);
 	msg->SetBufHeader(dataBuffer);
 	msg->Serialize(dataBuffer);
 
@@ -213,7 +222,7 @@ int Comm::SendPtoP(Message  * msg, std::string dest)
 	{
 		while(success == 0 && counter < 3)
 		{
-			success = (getPtr(commTable[sourceId][destId])->SendPtoP(dataBuffer,dest)); 
+			success = (getPtr(commTable[source][destId])->SendPtoP(dataBuffer,dest)); 
 			counter++;
 			sleep(5);
 		}
@@ -226,7 +235,7 @@ int Comm::SendPtoP(Message  * msg, std::string dest)
 	return 0; 
 }
 
-int Comm::SendBd(Message * msg)
+int Comm::SendBd(int source, int sourceMod, Message * msg)
 {
 	std::cout << "In send Bd " << std::endl; 
 	bool success = false; 
@@ -242,15 +251,16 @@ int Comm::SendBd(Message * msg)
 	msg->SetBufHeader(dataBuffer);
 	msg->Serialize(dataBuffer);
 
-	int id = getPtr('B')->GetId(systemName); 
+	//int id = 
+	//getPtr('B')->GetId(systemName); 
 	//std::cout << "id " << id << std::endl; 
 	std::map<std::string,int>::iterator it = nameIdMap.begin();
 
 
     for(int i = 0; i < nameIdMap.size(); i++)
 	{
-		std::cout << "it->second " << it->second << " id " << id << std::endl; 
-		if(it->second == id)
+		std::cout << "it->second " << it->second << " id " << source << std::endl; 
+		if(it->second == source)
 		{
 			it++;
 			continue;
@@ -258,7 +268,7 @@ int Comm::SendBd(Message * msg)
 	//	std::cout << "id " << id  << " " << "i " << i << std::endl << std::flush; 	
 	//	std::cout << "dest name " << it->first << std::endl << std::flush;
 		// could keep editing the buffer for it to have correct destination, and type
-		dataBuffer[2] = (int) commTable[id][it->second];
+		dataBuffer[2] = (int) commTable[source][it->second];
 		dataBuffer[7] = it->second;
 		dataBuffer[8] = dataBuffer[1];
 
@@ -266,7 +276,7 @@ int Comm::SendBd(Message * msg)
 		
 		while(success == 0 && counter < 3)
 		{
-			success = (getPtr(commTable[id][it->second])->SendPtoP(dataBuffer,it->first)); 
+			success = (getPtr(commTable[source][it->second])->SendPtoP(dataBuffer,it->first)); 
 			counter++;
 			sleep(5);
 		}

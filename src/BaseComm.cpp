@@ -15,12 +15,15 @@ void BaseComm::Init(int systemId)
 	std::string friendlyName; 
 	int numAs;
 	inf >> numAs; 
+	int counter =0;
 	//std::cout << "Basecomm init " << std::endl; 
-	while((inf>> id).good() && (inf>> friendlyName).good())
-	{
-	//	inf >> id; inf >> friendlyName;
+	//while((inf>> id).good() && (inf>> friendlyName).good())
+	while(counter < numAs)
+	{	
+		inf >> id; inf >> friendlyName;
 		std::cout << id << " " << friendlyName << std::endl << std::flush; 
 		nameIDs.insert(std::make_pair(friendlyName,id));
+		counter++;
 	}
 	inf.close(); 
 }

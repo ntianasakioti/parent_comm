@@ -30,12 +30,12 @@ int CommInt::SendMessage(std::string dest, Message * msg)
 
 	if(dest == "All")
 	{
-		return Comm::GetInstance()->SendBd(msg);
+		return Comm::GetInstance()->SendBd(_ASId, _moduleId, msg);
 		std::cout << "Done sending Bd at CommInt" << std::endl; 
 	}
 	else
 	{
-		return Comm::GetInstance()->SendPtoP(msg, dest);
+		return Comm::GetInstance()->SendPtoP(_ASId, _moduleId, msg, dest, _moduleId);
 		std::cout << "Done Sending PtP at CommInt" << std::endl; 
 	}
 	return 0;
