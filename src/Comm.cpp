@@ -48,16 +48,19 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, st
 	// read number of autonomous systems to create comm table 
 	int numAS = 0;
 	inf >> numAS; 
-
+	std::cout << "number of systems " << numAS << std::endl; 
 	// populate container that maps friendly names to ID used by the framework
 	int id;
 	std::string friendlyName; 
-	while((inf>> id).good() && (inf>> friendlyName).good())
+	int counter = 0; 
+	//while((inf>> id).good() && (inf>> friendlyName).good())
+	while(counter < numAS)
 	{
-		//std::cout << "Am I stuck here " << std::endl;
-		//inf >> id; inf >> friendlyName;
+		std::cout << "Am I stuck here " << std::endl;
+		inf >> id; inf >> friendlyName;
 		std::cout << id << " " << friendlyName << std::endl << std::flush;
 		nameIdMap.insert(std::make_pair(friendlyName,id));
+		counter++;
 	}
 
 //	std::cout << "Read and made pairs for ID maps" << std::endl; 
