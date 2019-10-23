@@ -62,9 +62,9 @@ int BaseComm::GetNextMsgType(int moduleId)
 
 void BaseComm::UpdateMessageLog(int  * dataBuffer, int moduleId)
 {
-	std::cout << "Pushing back a message to module " << moduleId << std::endl; 
+	//std::cout << "Pushing back a message to module " << moduleId << " with message id " << dataBuffer[3] << std::endl; 
 	Message * newMsg = _fcnPtr(dataBuffer[3]);
-	std::cout << "id " << dataBuffer[0] << " " << dataBuffer[1] << std::endl; 
+	//std::cout << "id " << dataBuffer[0] << " " << dataBuffer[1] << std::endl; 
 	newMsg->SetHeaderAttr(std::make_pair(dataBuffer[0], dataBuffer[1]),dataBuffer[2], dataBuffer[3], dataBuffer[4], 
 	std::make_pair(dataBuffer[5], dataBuffer[6]), std::make_pair(dataBuffer[7], dataBuffer[8]));
 	newMsg->DeSerialize(dataBuffer); 
@@ -103,17 +103,17 @@ int BaseComm::GetId(std::string name)
 {
 	//std::cout << "Name " << name << std::endl; 
 
-	std::map<std::string,int>::iterator it = nameIDs.begin();
+	std::map<std::string,int>::iterator it = nameIDs.find(name);
 
-	for(int i = 0 ; i < nameIDs.size(); i++)
-	{
-		//std::cout << it->first << std::endl; 
-		if(it->first == name)
-		{
+	//for(int i = 0 ; i < nameIDs.size(); i++)
+	//{
+	//	//std::cout << it->first << std::endl; 
+	//	if(it->first == name)
+	//	{
 			return it->second;
-		}
-		it++;
-	}
+	//	}
+	//	it++;
+	//}
 
 	return -1; 
 }

@@ -60,7 +60,7 @@ void ListeningThread()
 
 int RosComm::SendPtoP(int * dataBuffer, std::string dest)
 {
-	std::cout << "In roscomm's sent p to p" << std::endl << std::flush; 
+	//std::cout << "In roscomm's sent p to p" << std::endl << std::flush; 
 
 	std_msgs::Int32MultiArray dataArray;
 	dataArray.data.clear(); 
@@ -71,7 +71,8 @@ int RosComm::SendPtoP(int * dataBuffer, std::string dest)
 	}
 
 	int id; 
-	std::map<std::string, int>::iterator it; 
+	id = (nameIDs.find(dest))->second;
+/* 	std::map<std::string, int>::iterator it; 
 	it = nameIDs.begin(); 
 	for(int i = 0; i < nameIDs.size(); i++)
 	{
@@ -83,22 +84,23 @@ int RosComm::SendPtoP(int * dataBuffer, std::string dest)
 		}
 		it++;
 	}
-
+*/
 	std::map<int, ros::Publisher *>::iterator it2;
-	it2 = _publishers.begin();
+	(_publishers.find(id))->second->publish(dataArray);
+	/* it2 = _publishers.begin();
 	for(int i = 0; i < _publishers.size(); i++)
 	{
 		//std::cout << "iterator " << it2->first << std::endl; 
 		if(id == it2->first)
 		{
 			(it2->second)->publish(dataArray);
-			std::cout << "Ros success in sending " << std::endl;
+			//std::cout << "Ros success in sending " << std::endl;
 			ros::spinOnce(); 
 			return 1; 
 		}
 		it2++;
 	}
-
+*/
 	ros::spinOnce();
 	return 0;
 }
@@ -111,7 +113,7 @@ int RosComm::SendPtoP(int * dataBuffer, std::string dest)
 */
 void RosComm::messageCallback(const std_msgs::Int32MultiArray::ConstPtr& array)
 {
-	std::cout << "ROS HEARD SOMETHING " << std::endl; 
+	//std::cout << "ROS HEARD SOMETHING " << std::endl; 
 	// check that message is not a broadcast from "me"
 	std::vector<int>::const_iterator it = array->data.begin(); 
 	int * buf = new int[array->data.size()];

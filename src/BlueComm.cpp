@@ -131,7 +131,7 @@ void BlueComm::ListeningThread()
 		//std::tuple<int, int> dest = std::make_tuple(buf[6], buf[7]);
 		//msg->SetHeaderAttr(buf[1], buf[2], buf[3], source, dest);
 		//msg->DeSerialize(buf);
-		std::cout << "BLUETOOTH HEARD SOMETHING " << std::endl; 
+		//std::cout << "BLUETOOTH HEARD SOMETHING " << std::endl; 
 		UpdateMessageLog(buf, buf[6]);
 		delete buf; 
 
@@ -150,7 +150,7 @@ void BlueComm::ListeningThread()
 int BlueComm::SendPtoP(int * dataBuffer, std::string dest)
 {
 
-	std::cout << "In bluecomm's sent p to p" << std::endl << std::flush; 
+	//std::cout << "In bluecomm's sent p to p" << std::endl << std::flush; 
 	// Find destination address //
 	
 	int id = GetId(dest);

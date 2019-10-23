@@ -57,7 +57,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, st
 	// read number of autonomous systems to create comm table 
 	int numAS = 0;
 	inf >> numAS; 
-	std::cout << "number of systems " << numAS << std::endl; 
+	//std::cout << "number of systems " << numAS << std::endl; 
 	// populate container that maps friendly names to ID used by the framework
 	int id;
 	std::string friendlyName; 
@@ -67,7 +67,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, st
 	{
 		std::cout << "Am I stuck here " << std::endl;
 		inf >> id; inf >> friendlyName;
-		std::cout << id << " " << friendlyName << std::endl << std::flush;
+		//std::cout << id << " " << friendlyName << std::endl << std::flush;
 		nameIdMap.insert(std::make_pair(friendlyName,id));
 		counter++;
 	}
@@ -123,7 +123,8 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, st
 //	std::cout << "Populated commTable correctly " << std::endl; 
 
 	std::map<std::string, int>::iterator it = nameIdMap.begin();
-	while(it != nameIdMap.end())
+	id = (nameIdMap.find(systemName))->second;
+/* 	while(it != nameIdMap.end())
 	{
 		if(it->first == systemName)
 		{
@@ -132,7 +133,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, st
 		}
 		it++;
 	}
-
+*/
 //	std::cout << "Found system name id: " << id << std::endl; 
 
 	bool Rflag = false;
@@ -196,7 +197,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, st
 
 int Comm::SendPtoP(int source, int sourceMod, Message  * msg, std::string dest, int moduleId)
 {	
-	std::cout << "In send p to p " << std::endl << std::flush; 
+	//std::cout << "In send p to p " << std::endl << std::flush; 
 //	int sourceId = GetId(systemName);
 	int destId = GetId(dest);
 
@@ -224,11 +225,11 @@ int Comm::SendPtoP(int source, int sourceMod, Message  * msg, std::string dest, 
 		{
 			success = (getPtr(commTable[source][destId])->SendPtoP(dataBuffer,dest)); 
 			counter++;
-			sleep(5);
+			//sleep(5);
 		}
 	}
 
-	std::cout << "Done with Comm Send P to P " << std::endl; 
+	//std::cout << "Done with Comm Send P to P " << std::endl; 
 	if (success == 1)
 		return 1;
 
@@ -237,7 +238,7 @@ int Comm::SendPtoP(int source, int sourceMod, Message  * msg, std::string dest, 
 
 int Comm::SendBd(int source, int sourceMod, Message * msg)
 {
-	std::cout << "In send Bd " << std::endl; 
+	//std::cout << "In send Bd " << std::endl; 
 	bool success = false; 
 
 	// Create message data buffer
@@ -259,7 +260,7 @@ int Comm::SendBd(int source, int sourceMod, Message * msg)
 
     for(int i = 0; i < nameIdMap.size(); i++)
 	{
-		std::cout << "it->second " << it->second << " id " << source << std::endl; 
+		//std::cout << "it->second " << it->second << " id " << source << std::endl; 
 		if(it->second == source)
 		{
 			it++;
@@ -278,7 +279,7 @@ int Comm::SendBd(int source, int sourceMod, Message * msg)
 		{
 			success = (getPtr(commTable[source][it->second])->SendPtoP(dataBuffer,it->first)); 
 			counter++;
-			sleep(5);
+		//	sleep(5);
 		}
 		success = 0; 
 		it++; 
@@ -333,17 +334,18 @@ BaseComm * Comm::getPtr(char type)
 
 int Comm::GetId(std::string name)
 {
-	std::map<std::string,int>::iterator it = nameIdMap.begin();
-	for(int i = 0 ; i < nameIdMap.size(); i++)
+	//std::map<std::string,int>::iterator it = nameIdMap.begin();
+	return (nameIdMap.find(name))->second;
+/* 	for(int i = 0 ; i < nameIdMap.size(); i++)
 	{
 		if(it->first == name) 
 		{
 			return it->second;
 		}
 		it++;
-	}
+	}*/
 
-	return -1; 
+	//return -1; 
 }
 
 int Comm::GetNextMsgType(int moduleId)
