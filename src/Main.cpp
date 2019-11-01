@@ -37,6 +37,7 @@ int main()
 
 	Message * (*fcnPtr)(int);
 	fcnPtr = getMessage;
+	srand(time(0)); 
 
 
 	Message1 * msg = new Message1();

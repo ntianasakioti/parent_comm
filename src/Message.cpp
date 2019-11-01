@@ -93,9 +93,9 @@ int Message::GetHeaderSize()
 
 void Message::SetHeaderAttr(std::tuple<int,int> msgId, int commType, int msgType, int msgSize, std::tuple<int, int> sourceId, std::tuple<int,int> destId)
 {
-    std::cout << "Setting my attributes " <<  std::get<0>(msgId) << " " << std::get<1>(msgId) 
-    << commType << " " << msgType << " " << msgSize << " " << std::get<0>(sourceId) << " "
-    << std::get<1>(sourceId)<< " " << std::get<0>(destId) << " " << std::get<1>(destId) << std::endl;
+   // std::cout << "Setting my attributes " <<  std::get<0>(msgId) << " " << std::get<1>(msgId) 
+  //  << commType << " " << msgType << " " << msgSize << " " << std::get<0>(sourceId) << " "
+   // << std::get<1>(sourceId)<< " " << std::get<0>(destId) << " " << std::get<1>(destId) << std::endl;
     _msgId = std::make_tuple(std::get<0>(msgId), std::get<1>(msgId));
     _sourceId = std::make_tuple(std::get<0>(sourceId), std::get<1>(sourceId));
     _destId = std::make_tuple(std::get<0>(destId), std::get<1>(destId));

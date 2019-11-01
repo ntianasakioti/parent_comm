@@ -65,7 +65,7 @@ void Comm::Init(Message * (*fcnPtr)(int), ros::NodeHandle * nh, int systemId, st
 	//while((inf>> id).good() && (inf>> friendlyName).good())
 	while(counter < numAS)
 	{
-		std::cout << "Am I stuck here " << std::endl;
+		std::cout << "Am I stuck here " << ASname <<  std::endl;
 		inf >> id; inf >> friendlyName;
 		//std::cout << id << " " << friendlyName << std::endl << std::flush;
 		nameIdMap.insert(std::make_pair(friendlyName,id));
